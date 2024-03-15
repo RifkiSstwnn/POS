@@ -113,8 +113,13 @@ class UserController extends Controller
         //   $user->wasChanged('nama');
         //   dd($user->wasChanged(['nama', 'username']));
 
-        $user = UserModel::all();
+        // $user = UserModel::all();
+        //  return view('user', ['data' => $user]);
+        
+        $user = UserModel::with('level')->get();
+        // dd($user);
          return view('user', ['data' => $user]);
+        
     }
 
     public function tambah(){
@@ -153,6 +158,8 @@ class UserController extends Controller
       $user->delete();
 
       return redirect('/user');
-  }
+   }
+
+   
 
 } 
