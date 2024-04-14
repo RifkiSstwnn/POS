@@ -2,23 +2,60 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\LevelDataTable;
+use App\Http\Requests\StoreLevelRequest;
+use App\Models\LevelModel;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-Use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class LevelController extends Controller
 {
-    public function index(){
-        // DB::insert('insert into m_level(level_kode, level_nama, created_at) value(?, ?, ?)', ['CUS', 'pelanggan', now()]);
-        // return 'insert data baru berhasil';
-
-        // $row = DB::update('update m_level set level_nama = ? where level_kode = ?', ['Customer', 'CUS']);
-        // return 'Update data berhasil. Jumlah data yang diupdate: '. $row.' baris';
+    public function index(LevelDataTable $dataTable) {
+        /*
+         | INSERT DATA
+         | 
+         | DB::insert(
+         |   "INSERT INTO m_level(level_kode, level_nama, created_at) VALUES (?, ?, ?)",
+         |   ['CUS', 'Pelanggan', now()]
+         | );
+         */
         
-        // $row = DB::delete('delete from m_level where level_kode = ?',['CUS']);
-        // return 'Delete data berhasil. Jumlah data yang dihapus: ' .$row.' baris';
+         /*
+         | UPDATE DATA
+         | 
+         | $row = DB::update(
+         |  "UPDATE m_level SET level_nama = ? WHERE level_kode = ?",
+         |  ['Customer', 'CUS'],
+         | );
+         */
 
-        $data =DB::select('select * from m_level');
-        return view('level', ['data' => $data]);
+        /*
+         | DELETE DATA
+         | 
+         | $row = DB::update("DELETE FROM m_level WHERE level_kode = ?", ['CUS']);
+         | return 'Delete data berhasil. Jumlah data yang dihapus: ' . $row . ' baris';
+         */
 
+        return $dataTable->render('level.index');
     }
+
+    public function create() 
+    {
+        return view('level.create');
+    }
+
+    public function store(StoreLevelRequest $request): RedirectResponse
+    {
+        $validated_level = $request->validated();
+
+        LevelModel::create([
+            'level_kode' => $validated_level['kodeLevel'],
+            'level_nama' => $validated_level['namaLevel'],
+        ]);
+
+        return redirect('/level');
+    }
+
+    
 }

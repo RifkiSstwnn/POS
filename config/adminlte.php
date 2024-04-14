@@ -307,16 +307,32 @@ return [
 
         // Sidebar items:
         [
+            'type' => 'sidebar-menu-search',
+            'text' => 'search',
+        ],
+        [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
-
-        ['header' => 'Menu'],
+        ['header' => 'MENU'],
+        [
+            'text' => 'User',
+            'url' => 'user',
+            'icon' => 'fas fa-users mr-1',
+            'active' => ['user', 'user/create', 'regex:@^user/(edit/[0-9]+)$@']
+        ],
+        [
+            'text' => 'Level',
+            'url' => 'level',
+            'icon' => 'fas fa-sitemap',
+            'active' => ['level', 'level/create', 'regex:@^user/(edit/[0-9]+)$@']
+        ],
         [
             'text' => 'Kategori',
-            'url' => '/kategori',
-            'icon' => 'fas fa-fw fa-list-ul',
+            'url' => 'kategori',
+            'icon' => 'fas fa-boxes mr-1',
+            'active' => ['kategori', 'kategori/create', 'regex:@^kategori/(edit/[0-9]+)$@']
         ],
     ],
 
